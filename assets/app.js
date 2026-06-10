@@ -236,13 +236,7 @@ $(document).ready(function() {
 
             let emojiCount = 0;
             for (let i in renamedEmoji) {
-                let res;
-                try {
-                    res = await fetch(Emoji(renamedEmoji[i].id, renamedEmoji[i].animated)).then(res => res.blob());
-                } catch {
-                    console.log(`Emoji ${renamedEmoji[i].id} blocked by CORS, trying proxy`);
-                    res = await fetch(`https://corsproxy.io/?${Emoji(renamedEmoji[i].id, renamedEmoji[i].animated)}`).then(res => res.blob());
-                }
+                const res = await fetch(Emoji(renamedEmoji[i].id, renamedEmoji[i].animated)).then(res => res.blob());
                 emojiFolder.file(`${renamedEmoji[i].name}.${renamedEmoji[i].animated ? "gif" : "png"}`, res);
                 emojiCount++;
             }
@@ -250,13 +244,7 @@ $(document).ready(function() {
             const renamedStickers = globalThis.stickers;
             let stickerCount = 0;
             for (let i in renamedStickers) {
-                let res;
-                try {
-                    res = await fetch(Sticker(renamedStickers[i].id)).then(res => res.blob());
-                } catch {
-                    console.log(`Sticker ${renamedStickers[i].id} blocked by CORS, trying proxy`);
-                    res = await fetch(`https://corsproxy.io/?${Sticker(renamedStickers[i].id)}`).then(res => res.blob());
-                }
+                const res = await fetch(Sticker(renamedStickers[i].id)).then(res => res.blob());
                 stickerFolder.file(`${renamedStickers[i].name}.png`, res);
                 stickerCount++;
             }
